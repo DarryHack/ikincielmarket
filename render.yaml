@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: ikincielmarket
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && pybabel compile -d app/translations
+    preDeployCommand: flask db upgrade && flask seed && flask seed-demo
+    startCommand: gunicorn run:app --workers 2 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.4
+      - key: FLASK_APP
+        value: run.py
+      - key: FLASK_CONFIG
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@ikincielmarket.local
+      - key: ADMIN_PASSWORD
+        sync: false  # Render'da elle gir, repo'ya yazma
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ikincielmarket-db
+          property: connectionString
+
+databases:
+  - name: ikincielmarket-db
+    plan: free
+    databaseName: ikincielmarket
+    user: ikinciel
