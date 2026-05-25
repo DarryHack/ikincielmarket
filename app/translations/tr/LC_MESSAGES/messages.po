@@ -1,0 +1,261 @@
+# Turkish translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-05-25 17:34+0300\n"
+"PO-Revision-Date: 2026-05-25 17:34+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: tr\n"
+"Language-Team: tr <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/templates/base.html:23
+msgid "Ne ararsın?"
+msgstr "Ne ararsın?"
+
+#: app/templates/base.html:28
+msgid "İlan ver"
+msgstr "İlan ver"
+
+#: app/templates/base.html:29
+msgid "Favoriler"
+msgstr "Favoriler"
+
+#: app/templates/base.html:30 app/templates/messages/inbox.html:3
+msgid "Mesajlar"
+msgstr "Mesajlar"
+
+#: app/templates/base.html:32
+msgid "Yönetim"
+msgstr "Yönetim"
+
+#: app/templates/base.html:40
+msgid "Profilim"
+msgstr "Profilim"
+
+#: app/templates/auth/edit_profile.html:8 app/templates/auth/profile.html:17
+#: app/templates/base.html:41
+msgid "Profili düzenle"
+msgstr "Profili düzenle"
+
+#: app/templates/base.html:43
+msgid "Çıkış"
+msgstr "Çıkış"
+
+#: app/templates/auth/login.html:8 app/templates/base.html:47
+msgid "Giriş"
+msgstr "Giriş"
+
+#: app/templates/auth/register.html:8 app/templates/base.html:48
+msgid "Kayıt ol"
+msgstr "Kayıt ol"
+
+#: app/templates/base.html:82 app/templates/main/about.html:5
+msgid "Hakkımızda"
+msgstr "Hakkımızda"
+
+#: app/templates/admin/categories.html:4 app/templates/admin/dashboard.html:19
+#: app/templates/main/index.html:8
+msgid "Kategoriler"
+msgstr "Kategoriler"
+
+#: app/templates/admin/categories.html:9
+msgid "Yeni kategori"
+msgstr "Yeni kategori"
+
+#: app/templates/admin/dashboard.html:3
+msgid "Yönetim Paneli"
+msgstr "Yönetim Paneli"
+
+#: app/templates/admin/dashboard.html:17 app/templates/admin/users.html:4
+msgid "Kullanıcılar"
+msgstr "Kullanıcılar"
+
+#: app/templates/admin/dashboard.html:18 app/templates/admin/listings.html:4
+msgid "Tüm ilanlar"
+msgstr "Tüm ilanlar"
+
+#: app/templates/admin/users.html:21
+msgid "Admin değiştir"
+msgstr "Admin değiştir"
+
+#: app/templates/auth/edit_profile.html:17
+msgid "Avatar (opsiyonel)"
+msgstr "Avatar (opsiyonel)"
+
+#: app/templates/auth/edit_profile.html:19
+msgid "Max 5MB. PNG/JPG/WEBP/GIF."
+msgstr "Max 5MB. PNG/JPG/WEBP/GIF."
+
+#: app/templates/auth/edit_profile.html:22
+#: app/templates/listings/delete_confirm.html:12
+#: app/templates/listings/form.html:27
+msgid "Vazgeç"
+msgstr "Vazgeç"
+
+#: app/templates/auth/login.html:18
+msgid "Şifremi unuttum"
+msgstr "Şifremi unuttum"
+
+#: app/templates/auth/login.html:19
+msgid "Hesap oluştur"
+msgstr "Hesap oluştur"
+
+#: app/templates/auth/profile.html:11
+msgid "Üyelik:"
+msgstr "Üyelik:"
+
+#: app/templates/auth/profile.html:21
+msgid "Mesaj at"
+msgstr "Mesaj at"
+
+#: app/templates/auth/profile.html:27
+msgid "kullanıcısının ilanları"
+msgstr "kullanıcısının ilanları"
+
+#: app/templates/auth/profile.html:34 app/templates/main/index.html:36
+msgid "Henüz ilan yok."
+msgstr "Henüz ilan yok."
+
+#: app/templates/auth/register.html:18
+msgid "Zaten hesabın var mı?"
+msgstr "Zaten hesabın var mı?"
+
+#: app/templates/auth/register.html:18
+msgid "Giriş yap"
+msgstr "Giriş yap"
+
+#: app/templates/auth/reset_password.html:8
+msgid "Yeni şifre belirle"
+msgstr "Yeni şifre belirle"
+
+#: app/templates/auth/reset_request.html:8
+msgid "Şifre sıfırlama"
+msgstr "Şifre sıfırlama"
+
+#: app/templates/auth/reset_request.html:9
+msgid "Kayıtlı e-posta adresini gir; sana sıfırlama linki gönderelim."
+msgstr "Kayıtlı e-posta adresini gir; sana sıfırlama linki gönderelim."
+
+#: app/templates/errors/403.html:5
+msgid "Bu sayfaya yetkin yok."
+msgstr "Bu sayfaya yetkin yok."
+
+#: app/templates/errors/403.html:6 app/templates/errors/404.html:6
+#: app/templates/errors/413.html:6 app/templates/errors/500.html:6
+msgid "Anasayfaya dön"
+msgstr "Anasayfaya dön"
+
+#: app/templates/errors/404.html:5
+msgid "Aradığın sayfayı bulamadık."
+msgstr "Aradığın sayfayı bulamadık."
+
+#: app/templates/errors/413.html:5
+msgid "Dosya çok büyük. Maksimum 5MB."
+msgstr "Dosya çok büyük. Maksimum 5MB."
+
+#: app/templates/errors/500.html:5
+msgid "Bir şeyler ters gitti. Lütfen daha sonra tekrar dene."
+msgstr "Bir şeyler ters gitti. Lütfen daha sonra tekrar dene."
+
+#: app/templates/listings/delete_confirm.html:7
+msgid "İlanı silmek istediğine emin misin?"
+msgstr "İlanı silmek istediğine emin misin?"
+
+#: app/templates/listings/delete_confirm.html:8
+msgid "kalıcı olarak silinecek."
+msgstr "kalıcı olarak silinecek."
+
+#: app/templates/listings/detail.html:20
+msgid "Satıcı"
+msgstr "Satıcı"
+
+#: app/templates/listings/detail.html:28
+msgid "Satıcıya mesaj at"
+msgstr "Satıcıya mesaj at"
+
+#: app/templates/listings/detail.html:33
+msgid "Favorilerden çıkar"
+msgstr "Favorilerden çıkar"
+
+#: app/templates/listings/detail.html:33
+msgid "Favorilere ekle"
+msgstr "Favorilere ekle"
+
+#: app/templates/listings/detail.html:38
+msgid "Düzenle"
+msgstr "Düzenle"
+
+#: app/templates/listings/detail.html:39
+msgid "Sil"
+msgstr "Sil"
+
+#: app/templates/listings/detail.html:46
+msgid "Açıklama"
+msgstr "Açıklama"
+
+#: app/templates/listings/favorites.html:4
+msgid "Favorilerim"
+msgstr "Favorilerim"
+
+#: app/templates/listings/favorites.html:11
+msgid "Henüz favorin yok."
+msgstr "Henüz favorin yok."
+
+#: app/templates/listings/form.html:9
+msgid "İlanı düzenle"
+msgstr "İlanı düzenle"
+
+#: app/templates/listings/form.html:9
+msgid "Yeni ilan"
+msgstr "Yeni ilan"
+
+#: app/templates/listings/form.html:19
+msgid "Görsel"
+msgstr "Görsel"
+
+#: app/templates/listings/form.html:23
+msgid "Mevcut görsel:"
+msgstr "Mevcut görsel:"
+
+#: app/templates/main/index.html:11
+msgid "Tümü"
+msgstr "Tümü"
+
+#: app/templates/main/index.html:25
+msgid "için sonuçlar"
+msgstr "için sonuçlar"
+
+#: app/templates/main/index.html:25
+msgid "Son ilanlar"
+msgstr "Son ilanlar"
+
+#: app/templates/main/index.html:27
+msgid "ilan"
+msgstr "ilan"
+
+#: app/templates/messages/inbox.html:15 app/templates/messages/thread.html:11
+msgid "İlan:"
+msgstr "İlan:"
+
+#: app/templates/messages/inbox.html:23
+msgid "Henüz mesajın yok."
+msgstr "Henüz mesajın yok."
+
+#: app/templates/messages/thread.html:25
+msgid "Henüz mesaj yok. İlk mesajı sen at."
+msgstr "Henüz mesaj yok. İlk mesajı sen at."
+
+#: app/templates/messages/thread.html:32
+msgid "Mesaj yaz..."
+msgstr "Mesaj yaz..."
+
