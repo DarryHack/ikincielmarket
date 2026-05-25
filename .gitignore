@@ -42,6 +42,8 @@ app/static/uploads/avatars/*
 app/static/uploads/listings/*
 !app/static/uploads/avatars/.gitkeep
 !app/static/uploads/listings/.gitkeep
+# Seed görselleri commit edilir (demo için)
+!app/static/img/seed/
 
 # Translations binary
 *.mo
