@@ -602,3 +602,43 @@ hepsi git history'de izlenebilir.
 - Demo veriyi (`flask seed`) genişletip 5-10 örnek ilan koyardım, demo videosu
   daha gerçekçi görünürdü. (Sprint sonunda bu boşluk fark edildi, sonraki adımda
   eklenecek.)
+
+---
+
+## Oturum 8 — 25.05.2026 — 19:00-20:50 — Final Rötuşlar, UI Geliştirmesi ve PDF Denetimi
+
+### Hedef
+Projeyi Antigravity ortamında tekrar ele alıp, PDF'in "Mobil uyumlu, düzgün stil" beklentisini ve "Sunum (UI/UX) - 5 puan" rubriğini garantilemek adına UI/UX iyileştirmeleri yapmak; ardından projenin PDF gereksinimlerine son uygunluk denetimini gerçekleştirmek.
+
+### Kullandığım Mod ve Model
+- Mod: Fast / Direkt Müdahale
+- Model: Gemini 3.1 Pro (High)
+- Görünüm: Antigravity (Editor)
+
+### Verdiğim Promptlar (özet)
+1. "buraya anal ne yapıldıgını sede takviye yap" (Analiz et ve sade bir takviye yap).
+2. "Continue" (Önerilen UI eklentisine devam et).
+3. "BLG106_FinalProje.pdf indirilenlerde bak ona uygun mu diye" (Gereksinimleri denetle).
+4. "yap o halde uzat" (Eksikleri gider ve AI günlüğünü güncelleyerek uzat).
+
+### Ajanın Önerdiği Plan
+- Mevcut `app.css`'i analiz edip oldukça temel buldu.
+- UI/UX Puanını maksimize etmek için: "Inter" font ailesi, gradient (degrade) navbar, mikro-animasyonlar (hover) ve `index.html`'e modern bir Hero (Karşılama) alanı eklemeyi önerdi.
+- PDF denetimi yaparak projenin 10 teknik zorunluluk, 4 bonus ve AI günlüğü şartını (100/100) karşıladığını raporladı.
+
+### Plan'da Sorguladıklarım
+- Başta "sade bir takviye" istemiştim ancak ajan UI/UX rubriği gereği daha premium hissettirecek CSS dokunuşları ve Hero alanı ile geldi. Uygulamanın havasını tamamen değiştirdiği için onay verdim.
+
+### Üretilen Kodda Düzelttiklerim
+- Bu aşamada ajanın ürettiği CSS ve HTML (Hero section) kodları hatasızdı. `app/static/css/app.css` ve `app/templates/main/index.html` dosyaları başarıyla güncellendi.
+
+### Karşılaştığım Hatalar ve Çözümler
+- **Erişim İzinleri:** Antigravity ajanı `Masaüstü` ve `İndirilenler` klasörüne macOS güvenlik ilkeleri (Operation not permitted) nedeniyle erişemedi. Bypass sandbox yöntemi ve terminal `cp` komutu da engellenince, projeyi ajanın Workspace (çalışma alanına) manuel kopyalayarak çözdüm.
+
+### Bu Oturumdan Öğrendiğim
+- Antigravity gibi Sandbox (Korumalı Alan) içinde çalışan ajanlarda, işletim sisteminin dosya erişim yetkilerinin ajan ile nasıl çakışabildiğini gördüm.
+- "Vibe Coding" sadece sıfırdan kod yazdırmak değil, bitmiş bir projeye "Bunu rubriğe uydur / kontrol et" demek için de çok pratik. Ajan rubriği madde madde çıkarıp teyit edebiliyor.
+
+### Sonraki Oturum İçin Notlar
+- Demo videosunun çekimi ve LMS teslimi.
+- GitHub'a son commit'in pushlanması.
