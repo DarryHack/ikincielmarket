@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_field %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white d-flex align-items-center">
+        <img src="{{ other.avatar_url() }}" class="rounded-circle me-2" width="36" height="36">
+        <a href="{{ url_for('auth.profile', username=other.username) }}" class="fw-semibold text-decoration-none">{{ other.username }}</a>
+        {% if listing %}
+          <span class="ms-3 small text-muted">{{ _('İlan:') }} <a href="{{ url_for('listings.detail', listing_id=listing.id) }}">{{ listing.title }}</a></span>
+        {% endif %}
+      </div>
+      <div class="card-body" style="max-height:60vh;overflow-y:auto;">
+        {% if messages %}
+        {% for m in messages %}
+          <div class="d-flex mb-2 {% if m.sender_id == current_user.id %}justify-content-end{% endif %}">
+            <div class="p-2 rounded {% if m.sender_id == current_user.id %}bg-primary text-white{% else %}bg-light{% endif %}" style="max-width:75%;">
+              <div>{{ m.body }}</div>
+              <div class="small text-end opacity-75">{{ m.created_at.strftime("%H:%M") }}</div>
+            </div>
+          </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-muted text-center">{{ _('Henüz mesaj yok. İlk mesajı sen at.') }}</p>
+        {% endif %}
+      </div>
+      <div class="card-footer bg-white">
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <div class="input-group">
+            {{ form.body(class="form-control", rows=1, placeholder=_('Mesaj yaz...')) }}
+            <button class="btn btn-primary"><i class="bi bi-send"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

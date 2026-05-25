@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_pagination, listing_card %}
+{% block content %}
+<h4 class="mb-3"><i class="bi bi-heart-fill text-danger"></i> {{ _('Favorilerim') }}</h4>
+{% if listings.items %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+  {% for l in listings.items %}{{ listing_card(l) }}{% endfor %}
+</div>
+{{ render_pagination(listings, 'listings.my_favorites') }}
+{% else %}
+<div class="alert alert-info">{{ _('Henüz favorin yok.') }}</div>
+{% endif %}
+{% endblock %}

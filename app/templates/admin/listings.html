@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_pagination %}
+{% block content %}
+<h4 class="mb-3">{{ _('Tüm ilanlar') }}</h4>
+<div class="table-responsive">
+<table class="table table-hover align-middle">
+  <thead>
+    <tr><th>ID</th><th>Başlık</th><th>Satıcı</th><th>Kategori</th><th>Fiyat</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for l in listings.items %}
+    <tr>
+      <td>{{ l.id }}</td>
+      <td><a href="{{ url_for('listings.detail', listing_id=l.id) }}">{{ l.title }}</a></td>
+      <td>{{ l.seller.username }}</td>
+      <td>{{ l.category.name }}</td>
+      <td>{{ "%.2f"|format(l.price|float) }} ₺</td>
+      <td>
+        <form method="post" action="{{ url_for('admin.delete_listing', listing_id=l.id) }}" onsubmit="return confirm('Silinsin mi?')" class="d-inline">
+          {{ form.hidden_tag() }}
+          <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{{ render_pagination(listings, 'admin.listings') }}
+{% endblock %}

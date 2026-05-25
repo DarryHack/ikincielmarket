@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center py-5">
+  <h1 class="display-1 text-muted">500</h1>
+  <p class="lead">{{ _('Bir şeyler ters gitti. Lütfen daha sonra tekrar dene.') }}</p>
+  <a class="btn btn-primary" href="{{ url_for('main.index') }}">{{ _('Anasayfaya dön') }}</a>
+</div>
+{% endblock %}

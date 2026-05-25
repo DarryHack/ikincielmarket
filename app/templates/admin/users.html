@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_pagination %}
+{% block content %}
+<h4 class="mb-3">{{ _('Kullanıcılar') }}</h4>
+<div class="table-responsive">
+<table class="table table-hover align-middle">
+  <thead>
+    <tr><th>ID</th><th>Kullanıcı</th><th>E-posta</th><th>Üyelik</th><th>Admin</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for u in users.items %}
+    <tr>
+      <td>{{ u.id }}</td>
+      <td><a href="{{ url_for('auth.profile', username=u.username) }}">{{ u.username }}</a></td>
+      <td>{{ u.email }}</td>
+      <td><small>{{ u.created_at.strftime("%d.%m.%Y") }}</small></td>
+      <td>{% if u.is_admin %}<span class="badge bg-warning text-dark">admin</span>{% else %}—{% endif %}</td>
+      <td>
+        <form method="post" action="{{ url_for('admin.toggle_admin', user_id=u.id) }}" class="d-inline">
+          {{ form.hidden_tag() }}
+          <button class="btn btn-sm btn-outline-secondary">{{ _('Admin değiştir') }}</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{{ render_pagination(users, 'admin.users') }}
+{% endblock %}

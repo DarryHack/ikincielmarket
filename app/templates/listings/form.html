@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_field %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3">
+          {% if mode == "edit" %}{{ _('İlanı düzenle') }}{% else %}{{ _('Yeni ilan') }}{% endif %}
+        </h4>
+        <form method="post" enctype="multipart/form-data" novalidate>
+          {{ form.hidden_tag() }}
+          {{ render_field(form.title) }}
+          {{ render_field(form.category_id) }}
+          {{ render_field(form.price) }}
+          {{ render_field(form.location) }}
+          {{ render_field(form.description) }}
+          <div class="mb-3">
+            <label class="form-label">{{ _('Görsel') }}</label>
+            {{ form.image(class="form-control" + (" is-invalid" if form.image.errors else ""), accept="image/*") }}
+            {% for err in form.image.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+            {% if mode == "edit" and listing.image %}
+              <div class="form-text">{{ _('Mevcut görsel:') }} <img src="{{ listing.image_url() }}" height="60" class="ms-2 rounded"></div>
+            {% endif %}
+          </div>
+          {{ form.submit(class="btn btn-primary") }}
+          <a href="{{ url_for('main.index') }}" class="btn btn-link">{{ _('Vazgeç') }}</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

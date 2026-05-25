@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_field %}
+{% block content %}
+<h4 class="mb-3">{{ _('Kategoriler') }}</h4>
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">{{ _('Yeni kategori') }}</h6>
+        <form method="post" novalidate>
+          {{ form.hidden_tag() }}
+          {{ render_field(form.name) }}
+          {{ render_field(form.slug) }}
+          {{ form.submit(class="btn btn-primary w-100") }}
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <table class="table table-hover">
+      <thead><tr><th>ID</th><th>Ad</th><th>Slug</th><th></th></tr></thead>
+      <tbody>
+      {% for c in categories %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ c.name }}</td>
+        <td><code>{{ c.slug }}</code></td>
+        <td>
+          <form method="post" action="{{ url_for('admin.delete_category', category_id=c.id) }}" onsubmit="return confirm('Silinsin mi?')" class="d-inline">
+            {{ delete_form.hidden_tag() }}
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
