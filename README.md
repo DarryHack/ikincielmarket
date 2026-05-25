@@ -28,9 +28,11 @@ Gazi Üniversitesi TUSAŞ Kazan MYO — **BLG106 İnternet Programcılığı** d
 
 ## Hızlı Başlangıç
 
+**Canlı demo:** [Buraya Render/Railway URL ekle]
+
 ```bash
 # 1. Klonla
-git clone https://github.com/<KULLANICI>/ikincielmarket.git
+git clone https://github.com/DarryHack/ikincielmarket.git
 cd ikincielmarket
 
 # 2. Sanal ortam
