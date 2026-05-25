@@ -17,12 +17,12 @@ Aşağıdaki senaryo ~4 dakikalık akıcı bir tur sağlar.
 ## Senaryo (saniye saniye)
 
 ### 00:00-00:15 — Açılış
-> "Merhaba, ben Görkem Poyrazoğlu. Gazi Üniversitesi BLG106 İnternet Programcılığı
-> dersi için geliştirdiğim İkinciElMarket'i tanıtıyorum. Bu, Flask 3 ve SQLAlchemy 2
-> ile geliştirilmiş ikinci el alım-satım platformudur."
+> "Merhaba, ben [Adınız Soyadınız]. Gazi Üniversitesi BLG106 İnternet Programcılığı
+> dersi için geliştirdiğim İkinciElMarket'i tanıtıyorum. Uygulamanın modern ve 
+> mobil uyumlu bir arayüze sahip olması için premium CSS ve Hero alanı ekledim."
 
-- URL'i tarayıcı çubuğunda göster (canlı Render URL'i).
-- Anasayfa açılsın — 8 ilan kartı görünür.
+- URL'i tarayıcı çubuğunda göster (canlı Render URL'i veya localhost).
+- Anasayfa açılsın — Yeni eklediğimiz şık Hero alanı ve 8 ilan kartı görünür.
 
 ### 00:15-00:45 — Anasayfa, Arama, Kategori
 > "Anasayfada son ilanlar görünüyor. Sol tarafta kategoriler var, üstte arama
