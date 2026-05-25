@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#e9ecef"/>
+  <g fill="#adb5bd">
+    <rect x="80" y="80" width="240" height="160" rx="8" fill="#dee2e6"/>
+    <circle cx="140" cy="140" r="20"/>
+    <path d="M80 240 L160 170 L220 220 L290 150 L320 240 Z"/>
+  </g>
+  <text x="200" y="270" font-family="sans-serif" font-size="16" fill="#6c757d" text-anchor="middle">Görsel yok</text>
+</svg>

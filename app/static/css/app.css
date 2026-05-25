@@ -1,0 +1,6 @@
+body { background: #f6f7fb; }
+.card { border: 0; }
+.card.shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.navbar-brand i { color: #ffc107; }
+.text-pre-wrap { white-space: pre-wrap; word-break: break-word; }
+img.img-thumbnail { background:#fff; }
