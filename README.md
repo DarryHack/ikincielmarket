@@ -1,5 +1,10 @@
 # İkinciElMarket
 
+[![CI](https://github.com/DarryHack/ikincielmarket/actions/workflows/ci.yml/badge.svg)](https://github.com/DarryHack/ikincielmarket/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.10+-blue)
+![Flask](https://img.shields.io/badge/Flask-3.0-black)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 Basit bir ikinci el alım-satım platformu. Flask 3 + SQLAlchemy 2 + Bootstrap 5.
 
 Gazi Üniversitesi TUSAŞ Kazan MYO — **BLG106 İnternet Programcılığı** dersi dönem projesi.
