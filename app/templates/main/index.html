@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_pagination, listing_card %}
+
+{% block content %}
+<div class="row">
+  <aside class="col-12 col-md-3 mb-3">
+    <div class="card">
+      <div class="card-header bg-white fw-semibold">{{ _('Kategoriler') }}</div>
+      <div class="list-group list-group-flush">
+        <a class="list-group-item list-group-item-action {% if not category_slug %}active{% endif %}"
+           href="{{ url_for('main.index', q=q) }}">{{ _('Tümü') }}</a>
+        {% for c in all_categories %}
+        <a class="list-group-item list-group-item-action d-flex justify-content-between {% if category_slug == c.slug %}active{% endif %}"
+           href="{{ url_for('main.index', kategori=c.slug, q=q) }}">
+          {{ c.name }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </aside>
+
+  <section class="col-12 col-md-9">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0">
+        {% if q %}"{{ q }}" {{ _('için sonuçlar') }}{% else %}{{ _('Son ilanlar') }}{% endif %}
+      </h4>
+      <span class="text-muted small">{{ listings.total }} {{ _('ilan') }}</span>
+    </div>
+
+    {% if listings.items %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+      {% for l in listings.items %}{{ listing_card(l) }}{% endfor %}
+    </div>
+    {{ render_pagination(listings, 'main.index', extra={'q': q, 'kategori': category_slug}) }}
+    {% else %}
+    <div class="alert alert-info">{{ _('Henüz ilan yok.') }}</div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

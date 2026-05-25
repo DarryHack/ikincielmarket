@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_macros.html" import render_field %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3">{{ _('Kayıt ol') }}</h4>
+        <form method="post" novalidate>
+          {{ form.hidden_tag() }}
+          {{ render_field(form.username) }}
+          {{ render_field(form.email) }}
+          {{ render_field(form.password) }}
+          {{ render_field(form.confirm) }}
+          {{ form.submit(class="btn btn-primary w-100") }}
+        </form>
+        <p class="text-center small text-muted mt-3 mb-0">
+          {{ _('Zaten hesabın var mı?') }} <a href="{{ url_for('auth.login') }}">{{ _('Giriş yap') }}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

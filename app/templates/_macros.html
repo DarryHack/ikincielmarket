@@ -1,0 +1,63 @@
+{% macro render_field(field, placeholder="") %}
+  <div class="mb-3">
+    {{ field.label(class="form-label") }}
+    {% if field.type == "BooleanField" %}
+      <div class="form-check">
+        {{ field(class="form-check-input") }}
+        {{ field.label(class="form-check-label") }}
+      </div>
+    {% else %}
+      {{ field(class="form-control" + (" is-invalid" if field.errors else ""), placeholder=placeholder) }}
+    {% endif %}
+    {% for err in field.errors %}
+      <div class="invalid-feedback d-block">{{ err }}</div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro render_pagination(pagination, endpoint, extra={}) %}
+  {% if pagination.pages > 1 %}
+  <nav class="d-flex justify-content-center mt-4">
+    <ul class="pagination">
+      <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for(endpoint, page=pagination.prev_num, **extra) if pagination.has_prev else '#' }}">«</a>
+      </li>
+      {% for p in pagination.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+        {% if p %}
+          <li class="page-item {% if p == pagination.page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for(endpoint, page=p, **extra) }}">{{ p }}</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">…</span></li>
+        {% endif %}
+      {% endfor %}
+      <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for(endpoint, page=pagination.next_num, **extra) if pagination.has_next else '#' }}">»</a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+{% endmacro %}
+
+{% macro listing_card(listing) %}
+<div class="col">
+  <div class="card h-100 shadow-sm">
+    <a href="{{ url_for('listings.detail', listing_id=listing.id) }}" class="text-decoration-none text-reset">
+      <img src="{{ listing.image_url() }}" class="card-img-top" style="height:180px;object-fit:cover;" alt="{{ listing.title }}">
+    </a>
+    <div class="card-body d-flex flex-column">
+      <h6 class="card-title mb-1">
+        <a class="text-decoration-none text-reset" href="{{ url_for('listings.detail', listing_id=listing.id) }}">{{ listing.title }}</a>
+      </h6>
+      <div class="small text-muted mb-2">
+        <i class="bi bi-tag"></i> {{ listing.category.name }}
+        {% if listing.location %}<span class="ms-2"><i class="bi bi-geo-alt"></i> {{ listing.location }}</span>{% endif %}
+      </div>
+      <div class="mt-auto d-flex justify-content-between align-items-center">
+        <span class="fw-bold text-primary">{{ "%.2f"|format(listing.price|float) }} ₺</span>
+        <small class="text-muted">{{ listing.created_at.strftime("%d.%m.%Y") }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
