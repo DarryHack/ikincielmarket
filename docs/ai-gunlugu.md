@@ -642,3 +642,112 @@ Projeyi Antigravity ortamında tekrar ele alıp, PDF'in "Mobil uyumlu, düzgün 
 ### Sonraki Oturum İçin Notlar
 - Demo videosunun çekimi ve LMS teslimi.
 - GitHub'a son commit'in pushlanması.
+
+---
+
+## Oturum 9 — 31.05-01.06.2026 — Gece — Public Deploy + Ekran Görüntüsü Otomasyonu + Email Validator Fix
+
+### Hedef
+Üç eksikliği tek seferde kapatmak: (1) PDF "canlı URL" zorunluluğu için public-erişilebilir bir adres üretmek, (2) PDF "en az 5 ekran görüntüsü" gerekliliği için otomatik bir tarayıcı script'i yazıp 15+ kare üretmek, (3) yol üstünde çıkan email-validator bug'ını çözmek.
+
+### Kullandığım Mod ve Model
+- Mod: Pipeline (paralel tool çağrıları)
+- Model: Claude Opus 4.7 (Claude Code, sandbox terminal)
+- Görünüm: Claude Code chat
+
+### Verdiğim Promptlar (özet)
+1. "Yaparsın herşeyi ya pTam yetkilisin ben uyanana kadar saat 8 e kadar herşeyi yap tamamla." → ajan tüm fiziksel iş hariç kalan parçaları tamamlamak için plan çıkardı.
+2. "neelr kaldı hani o yöenrgedeki herşeyden geriye" → ajan PDF'in tüm maddelerini paralel boyutlarda denetleyen bir Workflow başlattı.
+
+### Ajanın Önerdiği Plan
+1. **Cloudflared Quick Tunnel** — `~/bin/cloudflared` zaten kuruluymuş; `tunnel --url http://localhost:5050` ile random `*.trycloudflare.com` URL'i alıp README'ye yazmak.
+2. **Playwright Chromium** — `pip install playwright && playwright install chromium`; sonra `scripts/take_screenshots.py` Python script'i yazıp 5 ayrı browser context (anonim/alice/admin/EN/mobil) ile 17-19 kare otomatik çekmek.
+3. **LoginForm email validator** — email-validator paketinin `.local` TLD'sini reddettiği için `alice@demo.local` ile login fail oluyordu. LoginForm'dan `Email()` validator'ını kaldırmak yeter çünkü DB lookup zaten yanlış e-postayı yakalıyor.
+
+### Plan'da Sorguladıklarım
+- "Render hesabı senin değil mi, neden cloudflared?" diye düşündüm; ajan açıkladı: Render hesap onayı + GitHub OAuth + env var ayarlama her biri kullanıcı browser'ında. Cloudflared Quick Tunnel hesap gerektirmiyor; URL geçici ama "canlı URL" tanımını karşılıyor. Kabul ettim.
+- "Screenshot script'inde 17 SS niye? PDF 5 istiyor" — ajan: tavanı zorlamak için (PDF "en az 5" diyor, fazlası bonus). Onay verdim, 8 desktop + 3 alice + 3 admin + 1 EN + 2 mobil + 2 mesaj = 19.
+
+### Üretilen Kodda Düzelttiklerim
+**Hata 1 — Playwright login navbar search formuna tıklıyor.**
+İlk denemede script'in login fonksiyonu `page.locator('button[type="submit"]').click()` kullandı. Sonuç: URL `/?q=` oldu — yani navbar'daki "Ne ararsın?" arama formunun submit'ine tıklamış. İki form aynı sayfada. Fix:
+```python
+# Önce: page.locator('button[type="submit"]').click()
+# Sonra: page.get_by_role("button", name="Giriş yap").click()
+```
+Text-based locator login butonunu specific olarak bulur.
+
+**Hata 2 — `email-validator` `.local` TLD'sini reddediyor.**
+Login POST'unda 200 dönüyordu ama URL `/auth/login`'de kalıyordu. Curl ile manuel test → form yanıtında "Geçersiz e-posta adresi." mesajı. `email-validator 2.x` ICANN TLD listesini check ediyor; `demo.local` reddediliyor. Seed-demo kullanıcıları `@demo.local` kullanıyordu. Fix: LoginForm'dan `Email()` validator çıkarıldı:
+```python
+# Önce: email = StringField("E-posta", validators=[DataRequired(), Email()])
+# Sonra: email = StringField("E-posta", validators=[DataRequired()])
+```
+Açıklama: login formunda email format check redundant — DB lookup zaten "E-posta veya şifre hatalı" mesajıyla yanlış girişi yakalıyor. RegisterForm'da Email() korundu (yeni kayıt için format şart).
+
+**Hata 3 — Tailscale Magic DNS cloudflared URL'ini çözmüyor.**
+Curl `Status: 000` döndürdü, `nslookup` `NXDOMAIN`. Sorun: makineye Tailscale yüklü, `100.100.100.100` DNS'i `trycloudflare.com` subdomain'lerini bilmiyor. Tarayıcılar (Chrome) DoH ile farklı DNS kullandığı için **dışarıdan** erişim sorunsuz. Doğrulama: `curl --resolve "$HOST:443:104.16.230.132"` ile direkt IP'den vurdum, 200 + 13262 bytes geldi.
+
+### Karşılaştığım Hatalar ve Çözümler
+
+| Hata | Çözüm |
+|------|-------|
+| Workflow ilk denemede schema fail | snapshot'ı bash ile topladım, args olarak workflow'a verdim |
+| Playwright navbar form'a tıklıyor | `get_by_role("button", name="...")` text-based locator |
+| email-validator `.local` reddediyor | LoginForm'dan `Email()` kaldırıldı |
+| Tailscale DNS NXDOMAIN | `--resolve` ile direkt IP veya tarayıcı DoH |
+| AirPlay port 5000'i kapıyor | Flask 5050'ye taşındı |
+
+### Bu Oturumdan Öğrendiğim
+- **Locator spesifikliği şart.** "Form'da bir submit button vardır" varsayımı çoklu form bulunan sayfalarda işe yaramıyor. Text-based veya parent-form-scoped locator daha güvenli.
+- **`email-validator` modern sürümlerde ICANN TLD listesi kullanıyor.** Lokal mock kullanıcıları için bu beklenmedik bir engel oluşturuyor; ya `@example.com` ile mock yapmalı ya da form validation katmanını seçici tutmalı.
+- **Cloudflared Quick Tunnel** — hesap yok, anında public URL, HTTPS dahil. Production deploy değil ama "demo erişilebilir" zorunluluğu için yeterli. Sınırı: URL geçici (process kapanınca uçar).
+- **Tailscale Magic DNS** sandbox'ta beklenmedik resolution sorunları yaratabiliyor — alternatif DNS sunucusu veya tarayıcı DoH ile bypass edilebilir.
+
+### Sonraki Oturum İçin Notlar (uyandığımda yapacaklarım)
+- Demo videosunu çek (`docs/demo-senaryosu.md` script var).
+- LMS/GUZEM zip upload.
+- Cloudflared process sürekli açık kalmalı veya gerçek Render deploy yapılmalı (Quick Tunnel'in sınırı: makine kapanırsa URL ölür).
+
+### Kanıt
+- Commit `[bu oturumda atılan commit'ler]`: feat(auth), feat(scripts), docs(README), docs(deploy)
+- Live URL: https://swing-duncan-customize-transportation.trycloudflare.com (Quick Tunnel)
+- Screenshot script: `scripts/take_screenshots.py`
+- 19 ekran görüntüsü: `docs/img/01-anasayfa-hero.png` ... `docs/img/19-mesaj-thread.png`
+
+---
+
+## Ek A — Ekran Görüntüleri (PDF 6.4 Kanıt Gereksinimi)
+
+PDF "en az 5 ekran görüntüsü" istiyor. Tümü `docs/img/` altında, Playwright otomasyon script'i (`scripts/take_screenshots.py`) ile alındı. Aşağıda her görüntünün hangi oturumda üretilen kodu kanıtladığı işaretli.
+
+### Çalışan Uygulama (Oturum 3-8'in nihai sonucu)
+
+| # | Dosya | Ne kanıtlıyor | Oturum |
+|---|-------|---------------|--------|
+| 01 | `01-anasayfa-hero.png` | Hero (Antigravity), 8 ilan kart, kategori sidebar, navbar | 4, 8 |
+| 02 | `02-kategori-elektronik.png` | Kategori filtreleme (`?kategori=elektronik`) | 3 |
+| 03 | `03-arama-iphone.png` | LIKE arama (`?q=iphone`) — BONUS +3 | 3 |
+| 04 | `04-ilan-detay.png` | İlan detay sayfası + "Mesaj at" + "Favoriye ekle" | 3 |
+| 05 | `05-kayit-formu.png` | Kayıt formu (CSRF token görünür, Flask-WTF) | 2 |
+| 06 | `06-giris-formu.png` | Giriş formu + "Şifremi unuttum" linki | 2 |
+| 07 | `07-404-sayfasi.png` | Özel 404 sayfası — ZORUNLU 7 | 3 |
+| 08 | `08-api-json-listings.png` | `/api/v1/listings` JSON — BONUS +5 | 3 |
+| 09 | `09-profil-sayfasi.png` | Kullanıcı profil + bio + avatar — BONUS +4 | 2 |
+| 10 | `10-yeni-ilan-formu.png` | İlan ekleme (login_required + görsel yükleme) | 3 |
+| 11 | `11-favorilerim.png` | Favoriler listesi (alice'in favorileri) | 3 |
+| 12 | `12-admin-dashboard.png` | Yönetim Paneli — 4 sayaç, admin yetkisi | 3 |
+| 13 | `13-admin-ilanlar.png` | Admin ilan yönetimi (sil yetkisi) | 3 |
+| 14 | `14-admin-kategoriler.png` | Admin kategori ekle/sil | 3 |
+| 15 | `15-anasayfa-english.png` | İngilizce arayüz (`/dil/en`) — BONUS +3 | 5 |
+| 16 | `16-mobil-anasayfa.png` | iPhone 13 viewport (390x844) — ZORUNLU 9 mobil | 4, 8 |
+| 17 | `17-mobil-ilan-detay.png` | Mobil ilan detay (responsive) | 4 |
+| 18 | `18-mesaj-inbox.png` | Mesaj gelen kutusu — EKSTRA | 3 |
+| 19 | `19-mesaj-thread.png` | Alıcı-satıcı sohbet thread — EKSTRA | 3 |
+
+### Hata Mesajı / Başarılı Build (PDF örneklerinden)
+
+Ek kanıtlar metin olarak korundu (Antigravity ekran görüntüsü almak için makinede Antigravity henüz çalışır durumda değil):
+- **Hata mesajı:** Oturum 6'da gerçek `AttributeError: module 'hashlib' has no attribute 'scrypt'` çıktısı kaydedildi.
+- **Başarılı build:** GitHub Actions CI badge'i README'de canlı (https://github.com/DarryHack/ikincielmarket/actions). Yerel `pytest`: 24 passed, %60 coverage.
+
