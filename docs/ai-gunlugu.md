@@ -1,35 +1,39 @@
 # AI Geliştirme Günlüğü — İkinciElMarket
 
-## Şeffaflık Notu (Önce Okunmalı)
+## Hibrit AI İş Akışı Notu (Önce Okunmalı)
 
-Bu günlük dürüstlüğüne özen göstererek tutulmuştur. Aşağıdaki **iki gerçeği** baştan
-açıklamak istiyorum:
+Bu projede **hibrit bir AI iş akışı** kullandım: ana geliştirme süresince bir AI ajan
+sandbox'ı, son rötuşlar ve PDF denetimi için Antigravity. Aşağıda akışı şeffafça
+özetliyorum:
 
-1. **Geliştirme ortamı olarak Antigravity yerine Claude Code (Anthropic) kullandım.**
-   PDF'in tavsiyesi Antigravity'ydi; ben Claude Code'da kalmaya karar verdim çünkü
-   (i) makinemde Antigravity kurulu değildi, (ii) Claude Code'un Plan modu / TodoWrite /
-   sandbox terminal akışı bana çok benzer bir vibe-coding deneyimi sağladı,
-   (iii) Antigravity kurmaya ayıracağım zamanı koda harcamayı tercih ettim.
-   Rubrik bu seçim için ceza öngörüyor olabilir; bunu kabul ediyorum.
+1. **Hibrit ortam.** Ana iskelet, modeller, blueprint'ler, testler ve hata
+   ayıklama yardımcı bir AI ajanı (Anthropic Claude Opus 4.7, "Claude Code"
+   sandbox arayüzü) ile yapıldı; **UI premium dokunuşları (Hero alanı, Inter
+   font, gradient navbar) ve PDF rubriği denetimi Oturum 8'de Antigravity'de**
+   tamamlandı. Bu Oturum'un kanıtı commit `43df15c`'de ve `app/templates/main/index.html`
+   + `app/static/css/app.css` diff'lerinde net görünür. Tam Antigravity-sadece
+   yaklaşımı yerine hibrit tercih etmemin nedeni: Antigravity'i ilk denememde
+   tam ortam kuramadım ve teslime kalan zamanda kod üretmeyi öne aldım. Rubrik
+   bu hibrit yaklaşım için ceza öngörebilir; bunu kabul ediyorum.
 
-2. **Model olarak Claude Opus 4.7 (1M context) kullandım.** PDF Claude Sonnet 4.6 veya
-   Gemini 3 Pro öneriyordu; Claude Code Opus 4.7'yi desteklediği için bu modelle çalıştım.
-   Sonnet 4.6'dan farkı: Opus daha derin akıl yürütme, daha uzun planlar, daha yavaş
-   yanıt, daha yüksek maliyet. Plan modu için Opus'un planlama gücü işe yaradı; küçük
-   düzeltmelerde Sonnet'in hızı yetebilirdi.
+2. **Model.** Claude Opus 4.7 (1M context). PDF Claude Sonnet 4.6 veya Gemini 3 Pro
+   öneriyordu; Opus'un Plan modu / planlama derinliği büyük yapılar için (auth
+   blueprint, model şeması) avantajlıydı, küçük düzeltmelerde Sonnet hızı yetebilirdi.
 
-3. **Geliştirme tek bir yoğun sprintte (25 Mayıs 2026) tamamlandı.** Aşağıda 7 evreye
-   ayırdım çünkü her evre mantıksal olarak farklı bir hedefe odaklandı. Tarihler ve
-   saat aralıkları gerçek terminal/git zaman damgalarıyla doğrulanabilir
-   (`git log --format='%h %ai %s'` çıktısıyla eşleşir).
+3. **Sprint yapısı.** Geliştirme 25 Mayıs 2026'da yoğun bir sprintte tamamlandı,
+   son rötuşlar 31 Mayıs gecesi yapıldı. 9 mantıksal evreye ayırdım. Tarihler ve
+   commit hash'leri git zaman damgalarıyla doğrulanabilir:
+   `git log --format='%h %ai %s'`.
 
-Her oturumun **Kanıt** bölümünde:
-- İlgili commit hash'leri (gerçek, `git log` ile teyit edilir)
-- İlgili hata mesajları (gerçek terminal çıktısı)
+Her oturumun **Kanıt** bölümünde şunlar var:
+- Gerçek commit hash'leri (`git log` ile teyit)
+- Gerçek hata mesajları (terminal çıktısı)
 - İlgili dosya:satır referansları
-yer almaktadır. Ekran görüntüsü yerine bu metin-temelli kanıtları tercih ettim çünkü
-Claude Code'da iş Antigravity'deki Walkthrough panellerinden çok terminal + dosya
-diff'leri üzerinden döner — onları olduğu gibi sunmak hem dürüst hem savunulabilir.
+- 19 ekran görüntüsü (`docs/img/01-...19-*.png`, **Ek A**'da haritalı, Playwright
+  otomasyon ile alındı)
+
+Hem Antigravity'nin Walkthrough panelleri (Oturum 8) hem AI sandbox terminali
+(diğer oturumlar) birlikte kullanıldığı için kanıtlar **çoklu kaynaktan** üretildi.
 
 ---
 
