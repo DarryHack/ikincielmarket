@@ -5,9 +5,10 @@ Aşağıdaki senaryo ~4 dakikalık akıcı bir tur sağlar.
 
 ## Hazırlık
 
-1. **Canlı URL:** https://swing-duncan-customize-transportation.trycloudflare.com
-   (Cloudflared Quick Tunnel, seed-demo otomatik yüklü: 8 ilan + 3 demo kullanıcı +
-   1 favori + 1 mesaj thread). Yerel alternatif: http://localhost:5050.
+1. **Canlı URL:** https://ikincielmarket.onrender.com
+   (Render.com kalıcı deploy, PostgreSQL add-on; seed-demo otomatik yüklü:
+   8 ilan + 3 demo kullanıcı + 1 favori + 1 mesaj thread). Yerel alternatif:
+   `flask run` → http://localhost:5000.
 2. **Kayıt aracı:**
    - macOS: QuickTime Player → File → New Screen Recording (Cmd+Shift+5)
    - Windows: OBS Studio (ücretsiz) veya Xbox Game Bar (Win+G)

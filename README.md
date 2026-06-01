@@ -33,7 +33,7 @@ Gazi Üniversitesi TUSAŞ Kazan MYO — **BLG106 İnternet Programcılığı** d
 
 ## Hızlı Başlangıç
 
-**Canlı demo:** https://swing-duncan-customize-transportation.trycloudflare.com
+**Canlı demo:** https://ikincielmarket.onrender.com
 
 ```bash
 # 1. Klonla
