@@ -86,15 +86,15 @@ DEMO_LISTINGS = [
 
 
 def _copy_seed_image(slug: str) -> str | None:
-    src = Path(current_app.root_path) / "static" / "img" / "seed" / f"{slug}.svg"
+    src = Path(current_app.root_path) / "static" / "img" / "seed" / f"{slug}.jpg"
     if not src.exists():
         return None
     dst_dir = Path(current_app.config["UPLOAD_FOLDER"]) / "listings"
     dst_dir.mkdir(parents=True, exist_ok=True)
-    dst_name = f"seed-{slug}.svg"
+    dst_name = f"seed-{slug}.jpg"
     dst = dst_dir / dst_name
-    if not dst.exists():
-        shutil.copy(src, dst)
+    # idempotent değil — Render cold start'larda yeniden kopyala (ephemeral FS)
+    shutil.copy(src, dst)
     return dst_name
 
 
@@ -124,8 +124,20 @@ def seed_demo_command():
 
     # Demo ilanlar (sırayla 3 kullanıcıya dağıt)
     created_count = 0
+    updated_count = 0
     for i, (title, img_slug, cat_slug, price, desc, loc) in enumerate(DEMO_LISTINGS):
-        if db.session.scalar(db.select(Listing).where(Listing.title == title)):
+        new_image = _copy_seed_image(img_slug)
+        existing = db.session.scalar(db.select(Listing).where(Listing.title == title))
+        if existing:
+            # Render cold start'ında ephemeral uploads/ klasörü uçar, image'ı yenile
+            if new_image and existing.image != new_image:
+                existing.image = new_image
+                updated_count += 1
+            elif new_image:
+                # dosya gerçekten diskte var mı kontrol et (cold start sonrası)
+                upload_path = Path(current_app.config["UPLOAD_FOLDER"]) / "listings" / new_image
+                if not upload_path.exists():
+                    _copy_seed_image(img_slug)  # tekrar kopyala
             continue
         listing = Listing(
             title=title,
@@ -134,7 +146,7 @@ def seed_demo_command():
             location=loc,
             user_id=created_users[i % len(created_users)].id,
             category_id=cats_by_slug[cat_slug].id,
-            image=_copy_seed_image(img_slug),
+            image=new_image,
         )
         db.session.add(listing)
         created_count += 1
@@ -164,7 +176,10 @@ def seed_demo_command():
             ))
         db.session.commit()
 
-    click.echo(f"Demo kullanıcı: {len(created_users)}  |  ilan eklendi: {created_count}")
+    click.echo(
+        f"Demo kullanıcı: {len(created_users)}  |  ilan eklendi: {created_count}"
+        f"  |  görsel güncellendi: {updated_count}"
+    )
     click.echo("Giriş: alice@demo.local / demo1234")
 
 
