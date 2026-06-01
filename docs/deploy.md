@@ -1,4 +1,30 @@
-# Deploy Rehberi — Render.com (ücretsiz)
+# Deploy Rehberi
+
+İki seçenek: **Cloudflared Quick Tunnel** (hesap yok, anında, geçici) veya
+**Render.com** (kalıcı, free tier).
+
+## Seçenek 1: Cloudflared Quick Tunnel (en hızlı, hesap yok)
+
+```bash
+# 1. Cloudflared (zaten kuruluysa atla)
+brew install cloudflared
+# veya: https://github.com/cloudflare/cloudflared/releases
+
+# 2. Flask'ı yerelde başlat
+cd ~/Desktop/ikincielmarket
+source venv/bin/activate
+flask seed && flask seed-demo
+nohup flask run --port 5050 > /tmp/flask.log 2>&1 &
+
+# 3. Quick Tunnel aç
+cloudflared tunnel --url http://localhost:5050
+# Çıktıda: https://random-words.trycloudflare.com
+# Bu URL'i README'ye ve docs/rapor.md'ye ekle, push'la.
+```
+
+Sınır: makine kapanırsa veya cloudflared process biterse URL ölür. Demo süresi için yeterli.
+
+## Seçenek 2: Render.com (ücretsiz, kalıcı)
 
 Render'ın free tier'ı bu proje için yeterli (uyku moduna geçer, ilk istekte ~30 sn
 uyanır — demo için sorun değil).

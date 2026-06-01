@@ -33,7 +33,7 @@ Gazi Üniversitesi TUSAŞ Kazan MYO — **BLG106 İnternet Programcılığı** d
 
 ## Hızlı Başlangıç
 
-**Canlı demo:** [Buraya Render/Railway URL ekle]
+**Canlı demo:** https://swing-duncan-customize-transportation.trycloudflare.com
 
 ```bash
 # 1. Klonla
@@ -120,7 +120,16 @@ ikincielmarket/
 
 ## Demo Video
 
-[YouTube linki buraya] — uygulamanın ana akışını gösteren 3-5 dk kayıt.
+3-5 dk uygulama akışı kaydı: **canlı demo URL'sinde** ([yukarıdaki bağlantı](#hızlı-başlangıç))
+seed-demo verisi (3 demo kullanıcı + 8 ilan + 1 favori + 1 mesaj thread) önceden yüklü gelir.
+Kayıt için adım adım script `docs/demo-senaryosu.md` dosyasındadır. YouTube/Drive bağlantısı
+teslim öncesi son commit'te buraya eklenecektir.
+
+## Ekran Görüntüleri
+
+19 otomatik üretilmiş ekran görüntüsü `docs/img/` altında — anonim/kullanıcı/admin/EN/mobil
+varyantları dahil. Üretim script'i: `scripts/take_screenshots.py` (Playwright headless).
+İlişkili oturumların eşleştirmesi için bkz. `docs/ai-gunlugu.md` → **Ek A**.
 
 ## Kullanılan Teknolojiler
 
