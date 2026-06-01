@@ -4,8 +4,9 @@ services:
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt && pybabel compile -d app/translations
-    preDeployCommand: flask db upgrade && flask seed && flask seed-demo
-    startCommand: gunicorn run:app --workers 2 --bind 0.0.0.0:$PORT
+    # Free tier preDeployCommand desteklemiyor → migrasyon + seed startCommand içine inline alındı.
+    # Komutlar idempotent: db upgrade aynı revision'da hiçbir şey yapmaz, seed mevcut kayıtları atlar.
+    startCommand: "flask db upgrade && flask seed && flask seed-demo && gunicorn run:app --workers 2 --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.4
