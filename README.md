@@ -120,10 +120,13 @@ ikincielmarket/
 
 ## Demo Video
 
-3-5 dk uygulama akışı kaydı: **canlı demo URL'sinde** ([yukarıdaki bağlantı](#hızlı-başlangıç))
-seed-demo verisi (3 demo kullanıcı + 8 ilan + 1 favori + 1 mesaj thread) önceden yüklü gelir.
-Kayıt için adım adım script `docs/demo-senaryosu.md` dosyasındadır. YouTube/Drive bağlantısı
-teslim öncesi son commit'te buraya eklenecektir.
+🎬 **YouTube:** https://youtu.be/VHOwLuhkBYw
+
+4:46 dk ekran kaydı — kayıt + giriş + ilan oluşturma + arama + favori + mesajlaşma + dil
+değişimi + admin paneli akışları. Senaryo: `docs/demo-senaryosu.md`. Canlı URL'de seed-demo
+verisi (3 kullanıcı + 8 ilan + 1 favori + 1 mesaj thread) önceden yüklü.
+
+**Müzik:** "Inspired" — Kevin MacLeod (incompetech.com), Creative Commons BY 4.0 lisansı.
 
 ## Ekran Görüntüleri
 
