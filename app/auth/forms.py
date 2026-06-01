@@ -7,7 +7,10 @@ from app.extensions import db
 
 
 class LoginForm(FlaskForm):
-    email = StringField("E-posta", validators=[DataRequired(), Email()])
+    # Email validator login formunda yok — DB lookup zaten geçersiz e-postayı
+    # "E-posta veya şifre hatalı" mesajıyla yakalar; ayrıca .local gibi TLD'leri
+    # email-validator paketi reddediyor, demo hesapları için sorun çıkıyordu.
+    email = StringField("E-posta", validators=[DataRequired()])
     password = PasswordField("Şifre", validators=[DataRequired()])
     remember = BooleanField("Beni hatırla")
     submit = SubmitField("Giriş yap")
